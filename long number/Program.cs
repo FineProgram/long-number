@@ -89,15 +89,44 @@ namespace long_number
             bool sign = false;
             #endregion
             #region здесь мы будем приписывать нули, угадай окуда скопипастил
+            //if (difference > 0)
+            //{
+            //    for (i = 0; i < difference; i++)
+            //    {
+            //        Bup = "0" + Bup;
+            //    }
+            //}
+            //else
+            //{
+            //    for (i = 0; i < difference; i++)
+            //    {
+            //        Aup = "0" + Aup;
+            //    }
+            //}
             while (A.undo_point.Length > B.undo_point.Length) Bup = "0" + Bup;
             while (A.undo_point.Length < B.undo_point.Length) Aup = "0" + Aup;
             while (A.post_point.Length > B.post_point.Length) Bup = Bup + "0";
             while (A.post_point.Length < B.post_point.Length) Aup = Aup + "0";
+            //difference = A.post_point.Length - B.post_point.Length;
+            //if (difference > 0)
+            //{
+            //    for (i = 0; i < difference; i++)
+            //    {
+            //        Bpp = Bpp + "0";
+            //    }
+            //}
+            //else
+            //{
+            //    for (i = 0; i < difference; i++)
+            //    {
+            //        App = App + "0";
+            //    }
+            //}
             #endregion
             #region теперь будем вычетать
             i = 0;
-           if (A.sign) { }//здесь можно весело убежать к сложению, впоследствии просто приписав знак
-            if ((Aup[0] - Bup[0] < 0)) { sign = true; }//тут надо придумать как считать число ставшим отрицательным и оставшиеся положительным
+           // while (temp == 0) { temp = Aup[i] - Bup[i]; i++; }//вычесление знака 
+           if ((Aup[0] - Bup[0] < 0)||(A.sign)) { }
             for (i = 0; i <= App.Length - 1; i++)
             {
                 temp = temp + (int)char.GetNumericValue(App[i]) - (int)char.GetNumericValue(Bpp[i]);
