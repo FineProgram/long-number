@@ -35,7 +35,6 @@ namespace long_number
         public static string operator + (Long_number A, Long_number B)//cложение
         {
             #region вспомогательные переменные
-            long difference = A.undo_point.Length - B.undo_point.Length;//разница в длинах- что бы знать куда приписывать нули для сложения
             string Aup = A.undo_point;//части чисел до и после точки
             string Bup = B.undo_point;
             string App = A.post_point;
@@ -45,37 +44,12 @@ namespace long_number
             int temp=0;
             #endregion
             #region здесь мы будем приписывать нули
-            if (difference > 0)
-            {
-                for(int i=0; i < difference; i++)
-                {
-                    Bup = "0" + Bup;
-                }
-            }
-            else
-            {
-                for (int i = 0; i < difference; i++)
-                {
-                    Aup = "0" + Aup;
-                }
-            }
-            difference = A.post_point.Length - B.post_point.Length;
-            if (difference > 0)
-            {
-                for (int i = 0; i < difference; i++)
-                {
-                    Bpp =  Bpp + "0";
-                }
-            }
-            else
-            {
-                for (int i = 0; i < difference; i++)
-                {
-                    App = App + "0";
-                }
-            }
+            while (A.undo_point.Length > B.undo_point.Length) Bup = "0" + Bup;
+            while (A.undo_point.Length < B.undo_point.Length) Aup = "0" + Aup;
+            while (A.post_point.Length > B.post_point.Length) Bup = Bup + "0";
+            while (A.post_point.Length < B.post_point.Length) Aup = Aup + "0";
             #endregion
-            #region сложение после точки
+            #region сложение после точки 
             for (int i = App.Length - 1; i >= 0; i--)
             {
                 temp = temp + (int)char.GetNumericValue(App[i]) + (int)char.GetNumericValue(Bpp[i]);
@@ -94,65 +68,46 @@ namespace long_number
             #endregion
             #region вывод
             if (!(string.IsNullOrEmpty(resultpp)))//обрезаем лишние нули тут или выводим ответ если хвоста нет
+            {
                 while (resultpp.EndsWith("0")) resultpp = resultpp.Remove(resultpp.Length - 1);
-            else return resultpp;//собственно, вывод
+                if (string.IsNullOrEmpty(resultpp)) { return resultup; }
+            }
+            else return resultup;//собственно, вывод
             return "" + resultup + "." + resultpp;//вывод когда хвост есть
             #endregion
         }
-        public static string operator - (Long_number A, Long_number B)
+        public static string operator -(Long_number A, Long_number B)//вычетание
         {
             #region вспомогательные переменные, как и в сложении
-            long difference = A.undo_point.Length - B.undo_point.Length;//разница в длинах- что бы знать куда приписывать нули для сложения
             string Aup = A.undo_point;//части чисел до и после точки
             string Bup = B.undo_point;
             string App = A.post_point;
             string Bpp = B.post_point;
             string resultpp = "";//то же для результата
             string resultup = "";
-            int temp = 0;
+            int i, temp = 0;
+            bool sign = false;
             #endregion
             #region здесь мы будем приписывать нули, угадай окуда скопипастил
-            if (difference > 0)
-            {
-                for (int i = 0; i < difference; i++)
-                {
-                    Bup = "0" + Bup;
-                }
-            }
-            else
-            {
-                for (int i = 0; i < difference; i++)
-                {
-                    Aup = "0" + Aup;
-                }
-            }
-            difference = A.post_point.Length - B.post_point.Length;
-            if (difference > 0)
-            {
-                for (int i = 0; i < difference; i++)
-                {
-                    Bpp = Bpp + "0";
-                }
-            }
-            else
-            {
-                for (int i = 0; i < difference; i++)
-                {
-                    App = App + "0";
-                }
-            }
+            while (A.undo_point.Length > B.undo_point.Length) Bup = "0" + Bup;
+            while (A.undo_point.Length < B.undo_point.Length) Aup = "0" + Aup;
+            while (A.post_point.Length > B.post_point.Length) Bup = Bup + "0";
+            while (A.post_point.Length < B.post_point.Length) Aup = Aup + "0";
             #endregion
             #region теперь будем вычетать
-            for (int i = 0; i <= App.Length - 1; i++)
+            i = 0;
+           if (A.sign) { }//здесь можно весело убежать к сложению, впоследствии просто приписав знак
+            if ((Aup[0] - Bup[0] < 0)) { sign = true; }//тут надо придумать как считать число ставшим отрицательным и оставшиеся положительным
+            for (i = 0; i <= App.Length - 1; i++)
             {
                 temp = temp + (int)char.GetNumericValue(App[i]) - (int)char.GetNumericValue(Bpp[i]);
-                resultpp = (temp % 10) + resultpp;
+                resultpp = resultpp + (temp % 10);
                 temp = temp / 10;
             }
             #endregion
             return "";
         }
-    }
+    }   
     class Program
     {
         static void Main(string[] args)
