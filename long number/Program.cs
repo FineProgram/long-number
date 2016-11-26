@@ -89,51 +89,24 @@ namespace long_number
             bool sign = false;
             #endregion
             #region здесь мы будем приписывать нули, угадай окуда скопипастил
-            //if (difference > 0)
-            //{
-            //    for (i = 0; i < difference; i++)
-            //    {
-            //        Bup = "0" + Bup;
-            //    }
-            //}
-            //else
-            //{
-            //    for (i = 0; i < difference; i++)
-            //    {
-            //        Aup = "0" + Aup;
-            //    }
-            //}
             while (A.undo_point.Length > B.undo_point.Length) Bup = "0" + Bup;
             while (A.undo_point.Length < B.undo_point.Length) Aup = "0" + Aup;
             while (A.post_point.Length > B.post_point.Length) Bup = Bup + "0";
             while (A.post_point.Length < B.post_point.Length) Aup = Aup + "0";
-            //difference = A.post_point.Length - B.post_point.Length;
-            //if (difference > 0)
+            #endregion
+            //#region теперь будем вычетать
+            //i = 0;
+            //// while (temp == 0) { temp = Aup[i] - Bup[i]; i++; }//вычесление знака 
+            //if ((Aup[0] - Bup[0] > 0) || (A.sign))
             //{
-            //    for (i = 0; i < difference; i++)
+            //    for (i = 0; i <= App.Length - 1; i++)
             //    {
-            //        Bpp = Bpp + "0";
+            //        temp = temp + (int)char.GetNumericValue(App[i]) - (int)char.GetNumericValue(Bpp[i]);
+            //        resultpp = resultpp + (temp % 10);
+            //        temp = temp / 10;
             //    }
             //}
-            //else
-            //{
-            //    for (i = 0; i < difference; i++)
-            //    {
-            //        App = App + "0";
-            //    }
-            //}
-            #endregion
-            #region теперь будем вычетать
-            i = 0;
-           // while (temp == 0) { temp = Aup[i] - Bup[i]; i++; }//вычесление знака 
-           if ((Aup[0] - Bup[0] < 0)||(A.sign)) { }
-            for (i = 0; i <= App.Length - 1; i++)
-            {
-                temp = temp + (int)char.GetNumericValue(App[i]) - (int)char.GetNumericValue(Bpp[i]);
-                resultpp = resultpp + (temp % 10);
-                temp = temp / 10;
-            }
-            #endregion
+            //#endregion
             return "";
         }
     }   
@@ -143,7 +116,7 @@ namespace long_number
         {
             Long_number A = new Long_number(Console.ReadLine());
             Long_number B = new Long_number(Console.ReadLine());
-            Console.WriteLine(A + B);
+            //Console.WriteLine(A + B);
             Console.WriteLine(A - B);
             Console.ReadLine();
         }
